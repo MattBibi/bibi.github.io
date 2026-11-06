@@ -15,8 +15,8 @@
   <meta name="twitter:card" content="summary_large_image">
   <link rel="icon" type="image/svg+xml" href="assets/rabbit.svg">
   <link rel="preload" href="assets/bibi-hero.png" as="image" fetchpriority="high">
-  <link rel="stylesheet" href="styles.css">
-  <script src="app.js" defer></script>
+  <link rel="stylesheet" href="styles.css?v=20261106-breeze2">
+  <script src="app.js?v=20261106-breeze2" defer></script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Bibiana Souza","alternateName":"Bibi Souza","url":"https://bibi.community/","jobTitle":"Software Engineer and Developer Community Builder","sameAs":["https://github.com/bibschan","https://linkedin.com/in/bibschan","https://dev.to/bibschan"],"knowsLanguage":["English","Portuguese","Spanish"]}</script>
 </head>
 <body>
@@ -53,12 +53,12 @@
           <svg class="bibi-illustration" id="bibi-illustration" viewBox="0 0 1254 1254" role="img" aria-labelledby="bibi-art-title">
             <title id="bibi-art-title">Cartoon Bibi smiling at her laptop, with a leafy plant beside her.</title>
             <defs>
-              <filter id="soft-mask"><feGaussianBlur stdDeviation="8"/></filter>
+              <filter id="soft-mask"><feGaussianBlur stdDeviation="14"/></filter>
               <mask id="hair-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="1254" height="1254"><rect width="1254" height="1254" fill="black"/><g fill="white" filter="url(#soft-mask)"><path d="M324 435 400 410 380 570 350 675 361 789 319 854 271 815 274 730 302 637 310 540Z"/><path d="M497 648 555 670 582 759 574 870 579 945 634 1027 541 1024 488 959 481 879 490 785Z"/><path d="M805 434 841 440 854 524 920 580 1024 628 1060 710 1042 786 997 784 986 699 948 665 879 628 818 593 792 522Z"/></g></mask>
               <mask id="plant-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="1254" height="1254"><rect width="1254" height="1254" fill="black"/><path fill="white" filter="url(#soft-mask)" d="M20 810H539V1038L425 1125 401 1015 180 1020 148 1141 20 1145Z"/></mask>
               <mask id="still-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="1254" height="1254"><rect width="1254" height="1254" fill="white"/><rect width="1254" height="1254" fill="black" mask="url(#hair-mask)"/><rect width="1254" height="1254" fill="black" mask="url(#plant-mask)"/></mask>
-              <filter id="hair-breeze" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency=".006 .009" numOctaves="1" seed="6" result="hair-wind"/><feDisplacementMap in="SourceGraphic" in2="hair-wind" scale="0" xChannelSelector="R" yChannelSelector="G"><animate class="breeze-animation" attributeName="scale" begin="indefinite" dur="16s" repeatCount="indefinite" values="0;0;0;3;6;2;0;0;0" keyTimes="0;.3;.4;.48;.56;.65;.73;.85;1"/></feDisplacementMap></filter>
-              <filter id="plant-breeze" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency=".005 .009" numOctaves="1" seed="12" result="plant-wind"/><feDisplacementMap in="SourceGraphic" in2="plant-wind" scale="0" xChannelSelector="R" yChannelSelector="G"><animate class="breeze-animation" attributeName="scale" begin="indefinite" dur="16s" repeatCount="indefinite" values="0;0;0;5;9;3;0;0;0" keyTimes="0;.3;.42;.5;.58;.66;.75;.85;1"/></feDisplacementMap></filter>
+              <filter id="hair-breeze" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency=".002 .003" numOctaves="1" seed="6" result="hair-wind"/><feDisplacementMap in="SourceGraphic" in2="hair-wind" scale="0" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap></filter>
+              <filter id="plant-breeze" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency=".002 .004" numOctaves="1" seed="12" result="plant-wind"/><feDisplacementMap in="SourceGraphic" in2="plant-wind" scale="0" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap></filter>
             </defs>
             <image href="assets/bibi-hero.png" width="1254" height="1254" mask="url(#still-mask)"/>
             <g filter="url(#hair-breeze)"><image href="assets/bibi-hero.png" width="1254" height="1254" mask="url(#hair-mask)"/></g>

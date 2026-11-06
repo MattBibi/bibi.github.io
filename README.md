@@ -12,7 +12,7 @@ Run `python -m http.server 8086` in this directory and open http://localhost:808
 
 Case study and About content lives in `app.js`. Page layout is in `index.html`; theme and responsive styling are in `styles.css`.
 
-The original cartoon hero is `assets/bibi-hero.png`. SVG masks apply a small, intermittent displacement to the hair and leaves; the person and laptop remain still. Reduced-motion preferences are respected and a footer control can pause the breeze.
+The original cartoon hero is `assets/bibi-hero.png`. Soft SVG masks isolate the hair and leaves. A JavaScript animation starts a gentle gust shortly after load, then repeats every 12 seconds with a quiet interval. The face, body, laptop and plant pot stay still. Reduced-motion preferences are respected; the footer control can explicitly enable or pause the breeze. Animation also pauses while the hero is offscreen or the tab is hidden.
 
 The GitHub panel uses a dated public contribution snapshot in `assets/contributions.json`. It never presents a decorative fallback as live account data.
 

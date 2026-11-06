@@ -38,27 +38,68 @@ document.querySelector('.dialog-close').addEventListener('click', () => dialog.c
 dialog.addEventListener('click', event => { if (event.target === dialog) { const r = dialog.getBoundingClientRect(); if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) dialog.close(); } });
 dialog.addEventListener('close', () => { document.body.classList.remove('dialog-open'); returnFocus?.focus(); });
 
-// A light, intermittent breeze affects only masked hair and leaf regions.
-// The face, body, laptop and plant pot stay still.
+// A short, visible breeze starts shortly after load, followed by a quiet pause.
+// Only the softly masked hair and leaf regions move, not the whole character.
 const illustration = document.getElementById('bibi-illustration');
 const motionToggle = document.getElementById('motion-toggle');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 let motionPaused = reducedMotion.matches;
-let animationsStarted = false;
-function updateMotion() {
-  const paused = motionPaused || reducedMotion.matches || document.hidden;
-  if (!animationsStarted && !paused) {
-    document.querySelectorAll('.breeze-animation').forEach(animation => animation.beginElement());
-    animationsStarted = true;
+const hairDisplacement = document.querySelector('#hair-breeze feDisplacementMap');
+const leafDisplacement = document.querySelector('#plant-breeze feDisplacementMap');
+let breezeFrame = 0;
+let breezeStartedAt = 0;
+let lastBreezeFrame = 0;
+let heroVisible = true;
+let previousHair = '';
+let previousLeaves = '';
+
+function setBreeze(hair, leaves) {
+  const hairValue = hair.toFixed(2);
+  const leafValue = leaves.toFixed(2);
+  if (hairValue !== previousHair) hairDisplacement.setAttribute('scale', hairValue);
+  if (leafValue !== previousLeaves) leafDisplacement.setAttribute('scale', leafValue);
+  previousHair = hairValue;
+  previousLeaves = leafValue;
+}
+
+function animateBreeze(now) {
+  if (motionPaused || document.hidden || !heroVisible) return;
+  // Cap updates at 30 fps and avoid repainting the filters during the rest period.
+  if (now - lastBreezeFrame >= 32) {
+    lastBreezeFrame = now;
+    const phase = ((now - breezeStartedAt) / 1000) % 12;
+    const progress = Math.max(0, Math.min(1, (phase - 0.35) / 5));
+    const gust = Math.sin(Math.PI * progress) ** 2;
+    const hair = gust * (Math.sin(phase * 1.65) * 42 + Math.sin(phase * 2.8) * 8);
+    const leaves = gust * (Math.sin(phase * 1.65 - 0.35) * 65 + Math.sin(phase * 3.1) * 9);
+    setBreeze(hair, leaves);
   }
-  if (paused) illustration.pauseAnimations(); else illustration.unpauseAnimations();
-  motionToggle.textContent = paused ? 'Enable breeze' : 'Pause breeze';
-  motionToggle.setAttribute('aria-pressed', String(!paused));
-  motionToggle.hidden = reducedMotion.matches;
+  breezeFrame = requestAnimationFrame(animateBreeze);
+}
+
+function updateMotion() {
+  cancelAnimationFrame(breezeFrame);
+  const paused = motionPaused || document.hidden || !heroVisible;
+  setBreeze(0, 0);
+  illustration.dataset.breezeState = paused ? 'paused' : 'playing';
+  if (!paused) {
+    breezeStartedAt = performance.now();
+    lastBreezeFrame = 0;
+    breezeFrame = requestAnimationFrame(animateBreeze);
+  }
+  motionToggle.textContent = motionPaused ? 'Enable breeze' : 'Pause breeze';
+  motionToggle.setAttribute('aria-pressed', String(!motionPaused));
+  motionToggle.hidden = false;
 }
 motionToggle.addEventListener('click', () => { motionPaused = !motionPaused; updateMotion(); });
 reducedMotion.addEventListener('change', () => { motionPaused = reducedMotion.matches; updateMotion(); });
 document.addEventListener('visibilitychange', updateMotion);
+if ('IntersectionObserver' in window) {
+  new IntersectionObserver(entries => {
+    const visible = entries[0].isIntersecting;
+    if (visible !== heroVisible) { heroVisible = visible; updateMotion(); }
+  }).observe(illustration);
+}
 updateMotion();
 
 const grid = document.getElementById('contributions');

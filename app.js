@@ -23,20 +23,97 @@ const cases = {
   }
 };
 
+const eventPhotos = [
+  { src: 'assets/community-speaking.webp', alt: 'Bibi speaking to a seated audience, holding a presentation remote.', caption: 'Sharing ideas with the technology community.' },
+  { src: 'assets/women-in-tech-stage.webp', alt: 'A Women in Tech event in Vancouver, with Bibi on stage and the audience in the foreground.', caption: 'Women in Tech · Vancouver · February 2026' },
+  { src: 'assets/fireside-panel.webp', alt: 'A fireside panel discussing women, creativity, and an agentic world.', caption: 'Fireside chat: Women leading creativity in an agentic world.' },
+  { src: 'assets/community-gathering.webp', alt: 'Speakers addressing a seated audience at a community gathering.', caption: 'Bringing people together.' }
+];
+
+function createEventGallery() {
+  const gallery = document.createElement('section');
+  gallery.className = 'event-gallery';
+  gallery.setAttribute('aria-label', 'Community event photographs');
+  gallery.innerHTML = `<figure class="gallery-figure"><a class="gallery-full-image" target="_blank" rel="noopener noreferrer" aria-label="Open this event photo in a new tab"><img class="gallery-image" width="1600" height="1067" alt=""><span class="photo-expand" aria-hidden="true">↗</span></a><figcaption class="gallery-caption" aria-live="polite"></figcaption></figure><div class="gallery-toolbar"><div class="gallery-thumbnails" aria-label="Choose a photo"></div><div class="gallery-pagination"><button class="gallery-previous" type="button" aria-label="Previous photo">←</button><span class="gallery-counter"></span><button class="gallery-next" type="button" aria-label="Next photo">→</button></div></div>`;
+  const image = gallery.querySelector('.gallery-image');
+  const fullImage = gallery.querySelector('.gallery-full-image');
+  const caption = gallery.querySelector('.gallery-caption');
+  const counter = gallery.querySelector('.gallery-counter');
+  const thumbnails = gallery.querySelector('.gallery-thumbnails');
+  let selected = 0;
+  const buttons = eventPhotos.map((photo, index) => {
+    const button = document.createElement('button');
+    button.className = 'gallery-thumbnail';
+    button.type = 'button';
+    button.setAttribute('aria-label', `Show photo ${index + 1}: ${photo.caption}`);
+    button.innerHTML = `<img src="${photo.src}" alt="" loading="lazy" width="72" height="48">`;
+    button.addEventListener('click', () => select(index));
+    thumbnails.append(button);
+    return button;
+  });
+  function select(index) {
+    selected = (index + eventPhotos.length) % eventPhotos.length;
+    const photo = eventPhotos[selected];
+    image.src = photo.src;
+    image.alt = photo.alt;
+    fullImage.href = photo.src;
+    caption.textContent = photo.caption;
+    counter.textContent = `${selected + 1} / ${eventPhotos.length}`;
+    buttons.forEach((button, i) => button.setAttribute('aria-pressed', String(i === selected)));
+  }
+  gallery.querySelector('.gallery-previous').addEventListener('click', () => select(selected - 1));
+  gallery.querySelector('.gallery-next').addEventListener('click', () => select(selected + 1));
+  gallery.addEventListener('keydown', event => {
+    if (event.key === 'ArrowLeft' || event.key === 'ArrowRight') {
+      event.preventDefault();
+      select(selected + (event.key === 'ArrowRight' ? 1 : -1));
+    }
+  });
+  select(0);
+  return gallery;
+}
+
 const dialog = document.getElementById('detail-dialog');
 const dialogContent = document.getElementById('dialog-content');
+const dialogScroll = document.querySelector('.dialog-scroll');
 let returnFocus;
+let closeTimer = 0;
+
 document.querySelectorAll('[data-dialog]').forEach(button => button.addEventListener('click', () => {
-  const item = cases[button.dataset.dialog];
+  const key = button.dataset.dialog;
+  const item = cases[key];
   if (!item) return;
   returnFocus = button;
-  dialogContent.innerHTML = `<p class="eyebrow">${item.label}</p><h2 id="dialog-title">${item.title}</h2>${item.body}<div class="dialog-links">${item.links.map(([label, url]) => `<a class="button secondary" href="${url}" target="_blank" rel="noopener noreferrer">${label} <span aria-hidden="true">↗</span></a>`).join('')}</div>`;
+  clearTimeout(closeTimer);
+  dialog.classList.remove('is-closing');
+  dialog.classList.toggle('photo-dialog', key === 'connect');
+  dialogContent.innerHTML = `<p class="eyebrow">${item.label}</p><h2 id="dialog-title">${item.title}</h2>${key === 'connect' ? '<div id="event-gallery-mount"></div>' : ''}${item.body}<div class="dialog-links">${item.links.map(([label, url]) => `<a class="button secondary" href="${url}" target="_blank" rel="noopener noreferrer">${label} <span aria-hidden="true">↗</span></a>`).join('')}</div>`;
+  if (key === 'connect') document.getElementById('event-gallery-mount').append(createEventGallery());
   dialog.showModal();
+  dialogScroll.scrollTop = 0;
   document.body.classList.add('dialog-open');
 }));
-document.querySelector('.dialog-close').addEventListener('click', () => dialog.close());
-dialog.addEventListener('click', event => { if (event.target === dialog) { const r = dialog.getBoundingClientRect(); if (event.clientX < r.left || event.clientX > r.right || event.clientY < r.top || event.clientY > r.bottom) dialog.close(); } });
-dialog.addEventListener('close', () => { document.body.classList.remove('dialog-open'); returnFocus?.focus(); });
+
+function closeDetails() {
+  if (!dialog.open || dialog.classList.contains('is-closing')) return;
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) { dialog.close(); return; }
+  dialog.classList.add('is-closing');
+  closeTimer = window.setTimeout(() => dialog.close(), 145);
+}
+document.querySelector('.dialog-close').addEventListener('click', closeDetails);
+dialog.addEventListener('cancel', event => { event.preventDefault(); closeDetails(); });
+dialog.addEventListener('click', event => {
+  if (event.target !== dialog) return;
+  const rect = dialog.getBoundingClientRect();
+  if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) closeDetails();
+});
+dialog.addEventListener('close', () => {
+  clearTimeout(closeTimer);
+  dialog.classList.remove('is-closing');
+  document.body.classList.remove('dialog-open');
+  returnFocus?.focus({ preventScroll: true });
+});
+
 
 // A short, visible breeze starts shortly after load, followed by a quiet pause.
 // Separate rigid pieces hinge at their roots; the artwork is never distorted.
@@ -117,23 +194,3 @@ if ('IntersectionObserver' in window) {
   }).observe(illustration);
 }
 updateMotion();
-
-const grid = document.getElementById('contributions');
-// An explicitly labelled decorative fallback is used if no snapshot is available.
-function drawContributions(days) {
-  grid.replaceChildren(...days.map(day => {
-    const square = document.createElement('span');
-    square.className = 'contribution';
-    square.dataset.level = String(day.level);
-    if (day.date) square.title = `${day.date} · GitHub contribution level ${day.level} of 4`;
-    return square;
-  }));
-}
-const decorativePattern = Array.from({length: 147}, (_, i) => ({level: ((i * 7 + Math.floor(i / 7) * 3) % 17) < 8 ? 0 : (i * 11 % 4) + 1}));
-drawContributions(decorativePattern);
-document.getElementById('activity-caption').textContent = 'Illustrative contribution pattern';
-fetch('assets/contributions.json').then(response => { if (!response.ok) throw new Error('No snapshot'); return response.json(); }).then(data => {
-  if (!Array.isArray(data.days) || !data.days.length) return;
-  drawContributions(data.days);
-  document.getElementById('activity-caption').textContent = `GitHub snapshot · ${data.updated}`;
-}).catch(() => { /* The labelled fallback keeps the panel useful when offline. */ });

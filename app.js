@@ -30,7 +30,7 @@ document.querySelectorAll('[data-dialog]').forEach(button => button.addEventList
   const item = cases[button.dataset.dialog];
   if (!item) return;
   returnFocus = button;
-  dialogContent.innerHTML = `<p class="eyebrow">${item.label}</p><h2 id="dialog-title">${item.title}</h2>${item.body}<div class="dialog-links">${item.links.map(([label, url]) => `<a class="button secondary" href="${url}">${label} <span aria-hidden="true">↗</span></a>`).join('')}</div>`;
+  dialogContent.innerHTML = `<p class="eyebrow">${item.label}</p><h2 id="dialog-title">${item.title}</h2>${item.body}<div class="dialog-links">${item.links.map(([label, url]) => `<a class="button secondary" href="${url}" target="_blank" rel="noopener noreferrer">${label} <span aria-hidden="true">↗</span></a>`).join('')}</div>`;
   dialog.showModal();
   document.body.classList.add('dialog-open');
 }));
@@ -46,9 +46,12 @@ const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 let motionPaused = reducedMotion.matches;
 const frontHair = document.getElementById('front-hair-motion');
 const rightHair = document.getElementById('right-hair-motion');
+const leftHair = document.getElementById('left-hair-motion');
 const topLeaf = document.getElementById('top-leaf-motion');
 const rightLeaf = document.getElementById('right-leaf-motion');
 const leftLeaf = document.getElementById('left-leaf-motion');
+const broadLeaf = document.getElementById('broad-leaf-motion');
+const upperRightLeaf = document.getElementById('upper-right-leaf-motion');
 let breezeFrame = 0;
 let breezeStartedAt = 0;
 let lastBreezeFrame = 0;
@@ -60,13 +63,16 @@ function setBreeze(hair, leaves) {
   const hairValue = (hair / 42).toFixed(3);
   const leafValue = (leaves / 65).toFixed(3);
   if (hairValue !== previousHair) {
-    frontHair.setAttribute('transform', `rotate(${(hair / 42 * 1.1).toFixed(3)} 520 680)`);
-    rightHair.setAttribute('transform', `rotate(${(-hair / 42 * 0.9).toFixed(3)} 842 548)`);
+    frontHair.setAttribute('transform', `rotate(${(hair / 42 * 2.25).toFixed(3)} 520 680)`);
+    rightHair.setAttribute('transform', `rotate(${(-hair / 42 * 1.9).toFixed(3)} 842 548)`);
+    leftHair.setAttribute('transform', `rotate(${(hair / 42 * 1.8).toFixed(3)} 344 625)`);
   }
   if (leafValue !== previousLeaves) {
-    topLeaf.setAttribute('transform', `rotate(${(leaves / 65 * 2.5).toFixed(3)} 344 950)`);
-    rightLeaf.setAttribute('transform', `rotate(${(-leaves / 65 * 2).toFixed(3)} 365 957)`);
-    leftLeaf.setAttribute('transform', `rotate(${(leaves / 65 * 2.1).toFixed(3)} 92 995)`);
+    topLeaf.setAttribute('transform', `rotate(${(leaves / 65 * 4.2).toFixed(3)} 344 950)`);
+    rightLeaf.setAttribute('transform', `rotate(${(-leaves / 65 * 3.5).toFixed(3)} 365 957)`);
+    leftLeaf.setAttribute('transform', `rotate(${(leaves / 65 * 3.6).toFixed(3)} 92 995)`);
+    broadLeaf.setAttribute('transform', `rotate(${(-leaves / 65 * 3.4).toFixed(3)} 211 933)`);
+    upperRightLeaf.setAttribute('transform', `rotate(${(leaves / 65 * 3.1).toFixed(3)} 395 958)`);
   }
   previousHair = hairValue;
   previousLeaves = leafValue;

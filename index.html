@@ -16,7 +16,7 @@
   <link rel="icon" type="image/svg+xml" href="assets/rabbit.svg">
   <link rel="preload" href="assets/bibi-hero.png" as="image" fetchpriority="high">
   <link rel="stylesheet" href="styles.css?v=20261106-breeze2">
-  <script src="app.js?v=20261106-sway4" defer></script>
+  <script src="app.js?v=20261106-sway5" defer></script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Bibiana Souza","alternateName":"Bibi Souza","url":"https://bibi.community/","jobTitle":"Software Engineer and Developer Community Builder","sameAs":["https://github.com/bibschan","https://linkedin.com/in/bibschan","https://dev.to/bibschan"],"knowsLanguage":["English","Portuguese","Spanish"]}</script>
 </head>
 <body>
@@ -34,9 +34,9 @@
     <header class="site-header">
       <a class="brand" href="#" aria-label="Bibi Souza, home"><span class="prompt">&gt;_</span> Bibi Souza</a>
       <nav aria-label="Main navigation">
-        <a href="#work">Work</a><a href="#community">Community</a><button type="button" data-dialog="about">About</button><a href="https://linkedin.com/in/bibschan">Contact</a>
+        <a href="#work">Work</a><a href="#community">Community</a><button type="button" data-dialog="about">About</button><a href="https://linkedin.com/in/bibschan" target="_blank" rel="noopener noreferrer">Contact</a>
       </nav>
-      <div class="header-socials"><a href="https://github.com/bibschan" aria-label="Bibi on GitHub"><svg class="icon"><use href="#github"/></svg></a><a href="https://linkedin.com/in/bibschan" aria-label="Bibi on LinkedIn"><svg class="icon"><use href="#linkedin"/></svg></a></div>
+      <div class="header-socials"><a href="https://github.com/bibschan" aria-label="Bibi on GitHub" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#github"/></svg></a><a href="https://linkedin.com/in/bibschan" aria-label="Bibi on LinkedIn" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#linkedin"/></svg></a></div>
     </header>
     <main id="main">
       <section class="hero" aria-labelledby="hero-title">
@@ -44,7 +44,7 @@
           <p class="eyebrow">Software engineer + community builder</p>
           <h1 id="hero-title">I build software.<br><span>And communities.</span></h1>
           <p class="hero-intro">Helping developers learn, connect, and build.<br> Bringing an engineer’s perspective to community.</p>
-          <div class="hero-actions"><a class="button primary" href="#work">Explore my work</a><a class="button secondary" href="https://linkedin.com/in/bibschan">Let’s connect</a></div>
+          <div class="hero-actions"><a class="button primary" href="#work">Explore my work</a><a class="button secondary" href="https://linkedin.com/in/bibschan" target="_blank" rel="noopener noreferrer">Let’s connect</a></div>
         </div>
         <div class="hero-art">
           <div class="code-window" aria-hidden="true"><div class="code-bar"><span class="window-dots"><i></i><i></i><i></i></span><span>community.ts</span></div><pre><span class="line-num">1</span> <b>build</b>();
@@ -58,14 +58,20 @@
               <path id="top-leaf-shape" d="M344 957C312 949 277 941 242 914C220 895 198 882 195 866C211 837 242 825 270 830C312 833 350 854 360 885C370 915 361 941 344 957Z"/>
               <path id="right-leaf-shape" d="M365 957C379 941 398 946 421 973C438 994 449 1028 445 1061L434 1092C425 1066 406 1053 391 1034C370 1014 351 984 365 957Z"/>
               <path id="left-leaf-shape" d="M92 995C100 1032 84 1070 63 1092L35 1130C20 1113 27 1077 43 1044C59 1015 75 1001 92 995Z"/>
+              <path id="left-hair-shape" d="M344 625C358 651 352 684 333 719C316 748 313 788 330 822L321 854C292 850 273 830 269 806C260 774 275 736 290 710C307 680 326 652 344 625Z"/>
+              <path id="broad-leaf-shape" d="M211 933C186 925 161 936 128 951L66 977C52 951 58 921 77 903C106 880 144 880 172 897C191 908 202 922 211 933Z"/>
+              <path id="upper-right-leaf-shape" d="M386 958C388 924 418 912 443 919C482 925 509 951 526 985L522 1007C509 984 490 978 468 968C440 954 411 952 386 958Z"/>
               <clipPath id="front-hair-clip"><use href="#front-hair-shape"/></clipPath>
               <clipPath id="right-hair-clip"><use href="#right-hair-shape"/></clipPath>
               <clipPath id="top-leaf-clip"><use href="#top-leaf-shape"/></clipPath>
               <clipPath id="right-leaf-clip"><use href="#right-leaf-shape"/></clipPath>
               <clipPath id="left-leaf-clip"><use href="#left-leaf-shape"/></clipPath>
+              <clipPath id="left-hair-clip"><use href="#left-hair-shape"/></clipPath>
+              <clipPath id="broad-leaf-clip"><use href="#broad-leaf-shape"/></clipPath>
+              <clipPath id="upper-right-leaf-clip"><use href="#upper-right-leaf-shape"/></clipPath>
               <mask id="fixed-illustration" maskUnits="userSpaceOnUse" x="0" y="0" width="1254" height="1254">
                 <rect width="1254" height="1254" fill="white"/>
-                <g fill="black"><use href="#front-hair-shape"/><use href="#right-hair-shape"/><use href="#top-leaf-shape"/><use href="#right-leaf-shape"/><use href="#left-leaf-shape"/></g>
+                <g fill="black"><use href="#front-hair-shape"/><use href="#right-hair-shape"/><use href="#top-leaf-shape"/><use href="#right-leaf-shape"/><use href="#left-leaf-shape"/><use href="#left-hair-shape"/><use href="#broad-leaf-shape"/><use href="#upper-right-leaf-shape"/></g>
               </mask>
             </defs>
             <image href="assets/bibi-hero.png" width="1254" height="1254" mask="url(#fixed-illustration)"/>
@@ -75,13 +81,16 @@
             <g id="top-leaf-motion"><image href="assets/bibi-hero.png" width="1254" height="1254" clip-path="url(#top-leaf-clip)"/></g>
             <g id="right-leaf-motion"><image href="assets/bibi-hero.png" width="1254" height="1254" clip-path="url(#right-leaf-clip)"/></g>
             <g id="left-leaf-motion"><image href="assets/bibi-hero.png" width="1254" height="1254" clip-path="url(#left-leaf-clip)"/></g>
+            <g id="left-hair-motion"><image href="assets/bibi-hero.png" width="1254" height="1254" clip-path="url(#left-hair-clip)"/></g>
+            <g id="broad-leaf-motion"><image href="assets/bibi-hero.png" width="1254" height="1254" clip-path="url(#broad-leaf-clip)"/></g>
+            <g id="upper-right-leaf-motion"><image href="assets/bibi-hero.png" width="1254" height="1254" clip-path="url(#upper-right-leaf-clip)"/></g>
           </svg>
         </div>
       </section>
       <div class="skills-strip" aria-label="Technical focus"><span>TypeScript</span><i>/</i><span>React</span><i>/</i><span>Next.js</span><i>/</i><span>APIs</span><i>/</i><span>MCP</span></div>
       <section class="impact-section" aria-labelledby="impact-title">
         <div class="impact-copy"><h2 id="impact-title">Community impact, in practice</h2><dl class="stats"><div><dt>35%</dt><dd>Open-source<br>contributor growth</dd></div><div><dt>2,000+</dt><dd>Women in Tech<br>event attendees</dd></div><div><dt>100+</dt><dd>Monthly VanJS<br>attendees</dd></div></dl></div>
-        <a class="activity-panel" href="https://github.com/bibschan" aria-label="Explore Bibi’s public contributions on GitHub"><div class="activity-header"><svg class="icon"><use href="#github"/></svg><span>Open-source activity</span><svg class="icon arrow-icon"><use href="#arrow"/></svg></div><div id="contributions" class="contributions" aria-hidden="true"></div><div class="activity-foot"><span id="activity-caption">Code. Contribute. Repeat.</span><span class="activity-legend" aria-hidden="true">Less <i></i><i></i><i></i><i></i> More</span></div></a>
+        <a class="activity-panel" href="https://github.com/bibschan" aria-label="Explore Bibi’s public contributions on GitHub" target="_blank" rel="noopener noreferrer"><div class="activity-header"><svg class="icon"><use href="#github"/></svg><span>Open-source activity</span><svg class="icon arrow-icon"><use href="#arrow"/></svg></div><div id="contributions" class="contributions" aria-hidden="true"></div><div class="activity-foot"><span id="activity-caption">Code. Contribute. Repeat.</span><span class="activity-legend" aria-hidden="true">Less <i></i><i></i><i></i><i></i> More</span></div></a>
       </section>
       <section class="work-section" id="work" aria-labelledby="work-title">
         <div class="section-heading"><h2 id="work-title">Code meets community.</h2><span class="mono section-note">Selected work <span aria-hidden="true">↗</span></span></div>
@@ -91,10 +100,10 @@
           <button class="project-card" type="button" data-dialog="connect"><div class="card-art" aria-hidden="true"><svg viewBox="0 0 360 170"><path fill="#5f354e" d="m0 115 46-48 24 18 42-55 27 31 36-22 75 76 40-24 70 56v23H0Z"/><path fill="#a96783" d="m65 84 47-54 27 31-26-11-20 27-6-8ZM132 67l43-28 50 51-41-29-9 8-9-14Z"/><path fill="#9f5e7b" d="M93 170v-51h24v51m7 0v-67h31v67m8 0v-44h23v44m9 0v-77h26v77m8 0v-52h28v52m10 0v-61h21v61m11 0V83h25v87Z"/><g class="art-line"><path d="M289 137V48m0 0V30m-17 19h34m-40 6h46m-42 7h38m-31 8h24m-18 8h12m-6 1v60M101 130h8m-8 10h8m23-26h15m-15 11h15m-15 11h15m55-30h10m-10 11h10m-10 11h10m-38 7h8m50-5h11m-11 10h11"/></g><path fill="#291c2a" d="m0 166 16-37-3 15 12-26 11 26-4-2 12 24h14l13-41 14 41h275v4H0Z"/></svg></div><div class="card-copy"><span class="eyebrow">Connect</span><h3>Communities that grow</h3><p>Building spaces where developers keep coming back.</p><div class="card-bottom"><span>Women in Tech Canada · VanJS</span><span class="card-arrow" aria-hidden="true">↗</span></div></div></button>
         </div>
       </section>
-      <section class="community-strip" id="community" aria-label="Speaking and community"><svg class="icon mic-icon"><use href="#mic"/></svg><h2>On stage. On air.<br class="small-break"> In the community.</h2><p><a href="https://www.mattandbibi.com/">Vamos Tech Talks <span aria-hidden="true">↗</span></a><span class="dot">·</span><button type="button" data-dialog="teach">Workshops</button><span class="dot">·</span><button type="button" data-dialog="connect">Meetups</button></p></section>
-      <section class="contact-section" aria-label="Get in touch"><div><p class="eyebrow">Let’s build something that brings people together.</p><p class="contact-heading">Good things start with a conversation.</p></div><a class="button primary" href="https://linkedin.com/in/bibschan">Say hello <span aria-hidden="true">↗</span></a></section>
+      <section class="community-strip" id="community" aria-label="Speaking and community"><svg class="icon mic-icon"><use href="#mic"/></svg><h2>On stage. On air.<br class="small-break"> In the community.</h2><p><a href="https://www.mattandbibi.com/" target="_blank" rel="noopener noreferrer">Vamos Tech Talks <span aria-hidden="true">↗</span></a><span class="dot">·</span><button type="button" data-dialog="teach">Workshops</button><span class="dot">·</span><button type="button" data-dialog="connect">Meetups</button></p></section>
+      <section class="contact-section" aria-label="Get in touch"><div><p class="eyebrow">Let’s build something that brings people together.</p><p class="contact-heading">Good things start with a conversation.</p></div><a class="button primary" href="https://linkedin.com/in/bibschan" target="_blank" rel="noopener noreferrer">Say hello <span aria-hidden="true">↗</span></a></section>
     </main>
-    <footer><span class="location"><svg class="icon"><use href="#pin"/></svg>Vancouver, BC</span><button id="motion-toggle" class="motion-toggle" type="button" aria-pressed="false" hidden>Pause breeze</button><div class="footer-links"><a href="https://dev.to/bibschan">Writing ↗</a><a href="https://linkedin.com/in/bibschan"><svg class="icon"><use href="#mail"/></svg>Contact me</a></div></footer>
+    <footer><span class="location"><svg class="icon"><use href="#pin"/></svg>Vancouver, BC</span><button id="motion-toggle" class="motion-toggle" type="button" aria-pressed="false" hidden>Pause breeze</button><div class="footer-links"><a href="https://dev.to/bibschan" target="_blank" rel="noopener noreferrer">Writing ↗</a><a href="https://linkedin.com/in/bibschan" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#mail"/></svg>Contact me</a></div></footer>
   </div>
   <dialog id="detail-dialog" aria-labelledby="dialog-title"><button class="dialog-close" aria-label="Close details" type="button"><svg class="icon"><use href="#close"/></svg></button><div id="dialog-content"></div></dialog>
 </body>

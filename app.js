@@ -14,7 +14,7 @@ const cases = {
   connect: {
     label: 'Connect / Community leadership', title: 'Communities that grow.',
     body: `<p>I love creating spaces where people feel welcome, find their voice, and keep coming back.</p><h3>Women in Tech® Canada</h3><p>Built the British Columbia chapter from zero as its first volunteer, growing it to 11 volunteers and 12 events reaching 2,000+ attendees. As Board Vice President, I support national events and coach provincial chapter heads.</p><h3>VanJS</h3><p>Helped revive Vancouver’s JavaScript meetup after it went dormant, growing monthly attendance to 100+ developers within a 5,000+ member community. Created and co-organized Super VanJS, a one-day developer conference.</p><h3>Vamos Tech Talks</h3><p>Co-host conversations with technology leaders about the ideas and experiences behind their work.</p>`,
-    links: [['Watch Vamos Tech Talks', 'https://www.youtube.com/watch?v=1Qdh8q4pnDU'], ['Connect on LinkedIn', 'https://linkedin.com/in/bibschan']]
+    links: [['Watch Vamos Tech Talks', 'https://www.mattandbibi.com/'], ['Connect on LinkedIn', 'https://linkedin.com/in/bibschan']]
   },
   about: {
     label: 'About / Bibiana Souza', title: 'An engineer’s mind. A community builder’s heart.',

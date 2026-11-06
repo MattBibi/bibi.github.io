@@ -39,13 +39,16 @@ dialog.addEventListener('click', event => { if (event.target === dialog) { const
 dialog.addEventListener('close', () => { document.body.classList.remove('dialog-open'); returnFocus?.focus(); });
 
 // A short, visible breeze starts shortly after load, followed by a quiet pause.
-// Only the softly masked hair and leaf regions move, not the whole character.
+// Separate rigid pieces hinge at their roots; the artwork is never distorted.
 const illustration = document.getElementById('bibi-illustration');
 const motionToggle = document.getElementById('motion-toggle');
 const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
 let motionPaused = reducedMotion.matches;
-const hairDisplacement = document.querySelector('#hair-breeze feDisplacementMap');
-const leafDisplacement = document.querySelector('#plant-breeze feDisplacementMap');
+const frontHair = document.getElementById('front-hair-motion');
+const rightHair = document.getElementById('right-hair-motion');
+const topLeaf = document.getElementById('top-leaf-motion');
+const rightLeaf = document.getElementById('right-leaf-motion');
+const leftLeaf = document.getElementById('left-leaf-motion');
 let breezeFrame = 0;
 let breezeStartedAt = 0;
 let lastBreezeFrame = 0;
@@ -54,17 +57,24 @@ let previousHair = '';
 let previousLeaves = '';
 
 function setBreeze(hair, leaves) {
-  const hairValue = hair.toFixed(2);
-  const leafValue = leaves.toFixed(2);
-  if (hairValue !== previousHair) hairDisplacement.setAttribute('scale', hairValue);
-  if (leafValue !== previousLeaves) leafDisplacement.setAttribute('scale', leafValue);
+  const hairValue = (hair / 42).toFixed(3);
+  const leafValue = (leaves / 65).toFixed(3);
+  if (hairValue !== previousHair) {
+    frontHair.setAttribute('transform', `rotate(${(hair / 42 * 1.1).toFixed(3)} 520 680)`);
+    rightHair.setAttribute('transform', `rotate(${(-hair / 42 * 0.9).toFixed(3)} 842 548)`);
+  }
+  if (leafValue !== previousLeaves) {
+    topLeaf.setAttribute('transform', `rotate(${(leaves / 65 * 2.5).toFixed(3)} 344 950)`);
+    rightLeaf.setAttribute('transform', `rotate(${(-leaves / 65 * 2).toFixed(3)} 365 957)`);
+    leftLeaf.setAttribute('transform', `rotate(${(leaves / 65 * 2.1).toFixed(3)} 92 995)`);
+  }
   previousHair = hairValue;
   previousLeaves = leafValue;
 }
 
 function animateBreeze(now) {
   if (motionPaused || document.hidden || !heroVisible) return;
-  // Cap updates at 30 fps and avoid repainting the filters during the rest period.
+  // Cap updates at 30 fps and leave each piece still during the rest period.
   if (now - lastBreezeFrame >= 32) {
     lastBreezeFrame = now;
     const phase = ((now - breezeStartedAt) / 1000) % 12;

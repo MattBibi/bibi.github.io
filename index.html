@@ -16,7 +16,7 @@
   <link rel="icon" type="image/svg+xml" href="assets/rabbit.svg">
   <link rel="preload" href="assets/bibi-hero.png" as="image" fetchpriority="high">
   <link rel="stylesheet" href="styles.css?v=20261106-breeze2">
-  <script src="app.js?v=20261106-links3" defer></script>
+  <script src="app.js?v=20261106-sway4" defer></script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Bibiana Souza","alternateName":"Bibi Souza","url":"https://bibi.community/","jobTitle":"Software Engineer and Developer Community Builder","sameAs":["https://github.com/bibschan","https://linkedin.com/in/bibschan","https://dev.to/bibschan"],"knowsLanguage":["English","Portuguese","Spanish"]}</script>
 </head>
 <body>
@@ -53,16 +53,28 @@
           <svg class="bibi-illustration" id="bibi-illustration" viewBox="0 0 1254 1254" role="img" aria-labelledby="bibi-art-title">
             <title id="bibi-art-title">Cartoon Bibi smiling at her laptop, with a leafy plant beside her.</title>
             <defs>
-              <filter id="soft-mask"><feGaussianBlur stdDeviation="14"/></filter>
-              <mask id="hair-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="1254" height="1254"><rect width="1254" height="1254" fill="black"/><g fill="white" filter="url(#soft-mask)"><path d="M324 435 400 410 380 570 350 675 361 789 319 854 271 815 274 730 302 637 310 540Z"/><path d="M497 648 555 670 582 759 574 870 579 945 634 1027 541 1024 488 959 481 879 490 785Z"/><path d="M805 434 841 440 854 524 920 580 1024 628 1060 710 1042 786 997 784 986 699 948 665 879 628 818 593 792 522Z"/></g></mask>
-              <mask id="plant-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="1254" height="1254"><rect width="1254" height="1254" fill="black"/><path fill="white" filter="url(#soft-mask)" d="M20 810H539V1038L425 1125 401 1015 180 1020 148 1141 20 1145Z"/></mask>
-              <mask id="still-mask" maskUnits="userSpaceOnUse" x="0" y="0" width="1254" height="1254"><rect width="1254" height="1254" fill="white"/><rect width="1254" height="1254" fill="black" mask="url(#hair-mask)"/><rect width="1254" height="1254" fill="black" mask="url(#plant-mask)"/></mask>
-              <filter id="hair-breeze" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency=".002 .003" numOctaves="1" seed="6" result="hair-wind"/><feDisplacementMap in="SourceGraphic" in2="hair-wind" scale="0" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap></filter>
-              <filter id="plant-breeze" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency=".002 .004" numOctaves="1" seed="12" result="plant-wind"/><feDisplacementMap in="SourceGraphic" in2="plant-wind" scale="0" xChannelSelector="R" yChannelSelector="G"></feDisplacementMap></filter>
+              <path id="front-hair-shape" d="M509 646C541 660 565 704 573 758C583 808 554 848 554 891C560 943 580 984 634 1028C590 1030 547 1009 516 977C490 945 477 905 483 867L494 798C502 748 496 703 484 680Z"/>
+              <path id="right-hair-shape" d="M842 548C864 568 908 577 951 596C1008 622 1041 666 1049 727L1042 787L1001 788C1010 733 983 689 946 662C916 643 881 629 859 602Z"/>
+              <path id="top-leaf-shape" d="M344 957C312 949 277 941 242 914C220 895 198 882 195 866C211 837 242 825 270 830C312 833 350 854 360 885C370 915 361 941 344 957Z"/>
+              <path id="right-leaf-shape" d="M365 957C379 941 398 946 421 973C438 994 449 1028 445 1061L434 1092C425 1066 406 1053 391 1034C370 1014 351 984 365 957Z"/>
+              <path id="left-leaf-shape" d="M92 995C100 1032 84 1070 63 1092L35 1130C20 1113 27 1077 43 1044C59 1015 75 1001 92 995Z"/>
+              <clipPath id="front-hair-clip"><use href="#front-hair-shape"/></clipPath>
+              <clipPath id="right-hair-clip"><use href="#right-hair-shape"/></clipPath>
+              <clipPath id="top-leaf-clip"><use href="#top-leaf-shape"/></clipPath>
+              <clipPath id="right-leaf-clip"><use href="#right-leaf-shape"/></clipPath>
+              <clipPath id="left-leaf-clip"><use href="#left-leaf-shape"/></clipPath>
+              <mask id="fixed-illustration" maskUnits="userSpaceOnUse" x="0" y="0" width="1254" height="1254">
+                <rect width="1254" height="1254" fill="white"/>
+                <g fill="black"><use href="#front-hair-shape"/><use href="#right-hair-shape"/><use href="#top-leaf-shape"/><use href="#right-leaf-shape"/><use href="#left-leaf-shape"/></g>
+              </mask>
             </defs>
-            <image href="assets/bibi-hero.png" width="1254" height="1254" mask="url(#still-mask)"/>
-            <g filter="url(#hair-breeze)"><image href="assets/bibi-hero.png" width="1254" height="1254" mask="url(#hair-mask)"/></g>
-            <g filter="url(#plant-breeze)"><image href="assets/bibi-hero.png" width="1254" height="1254" mask="url(#plant-mask)"/></g>
+            <image href="assets/bibi-hero.png" width="1254" height="1254" mask="url(#fixed-illustration)"/>
+            <path fill="#2c212c" d="M505 675C554 738 539 833 539 894C543 945 567 989 608 1015L560 1002C496 955 483 890 494 817L493 707Z"/>
+            <g id="front-hair-motion"><image href="assets/bibi-hero.png" width="1254" height="1254" clip-path="url(#front-hair-clip)"/></g>
+            <g id="right-hair-motion"><image href="assets/bibi-hero.png" width="1254" height="1254" clip-path="url(#right-hair-clip)"/></g>
+            <g id="top-leaf-motion"><image href="assets/bibi-hero.png" width="1254" height="1254" clip-path="url(#top-leaf-clip)"/></g>
+            <g id="right-leaf-motion"><image href="assets/bibi-hero.png" width="1254" height="1254" clip-path="url(#right-leaf-clip)"/></g>
+            <g id="left-leaf-motion"><image href="assets/bibi-hero.png" width="1254" height="1254" clip-path="url(#left-leaf-clip)"/></g>
           </svg>
         </div>
       </section>

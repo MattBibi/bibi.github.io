@@ -115,7 +115,7 @@ dialog.addEventListener('close', () => {
 });
 
 
-// A short, visible breeze starts shortly after load, followed by a quiet pause.
+// Continuous gentle sway, with occasional independently timed blinks.
 // Separate rigid pieces hinge at their roots; the artwork is never distorted.
 const illustration = document.getElementById('bibi-illustration');
 const motionToggle = document.getElementById('motion-toggle');
@@ -129,6 +129,13 @@ const rightLeaf = document.getElementById('right-leaf-motion');
 const leftLeaf = document.getElementById('left-leaf-motion');
 const broadLeaf = document.getElementById('broad-leaf-motion');
 const upperRightLeaf = document.getElementById('upper-right-leaf-motion');
+const blinkOverlay = document.getElementById('blink-overlay');
+const leftEye = document.getElementById('left-eye-motion');
+const rightEye = document.getElementById('right-eye-motion');
+const closedEyelashes = document.getElementById('closed-eyelashes');
+let nextBlinkAt = 0;
+let blinkStartedAt = null;
+let previousBlink = -1;
 let breezeFrame = 0;
 let breezeStartedAt = 0;
 let lastBreezeFrame = 0;
@@ -157,30 +164,58 @@ function setBreeze(hair, leaves) {
 
 function animateBreeze(now) {
   if (motionPaused || document.hidden || !heroVisible) return;
-  // Cap updates at 30 fps and leave each piece still during the rest period.
+  // Keep the same small rotations, without a gust envelope or rest period.
   if (now - lastBreezeFrame >= 32) {
     lastBreezeFrame = now;
-    const phase = ((now - breezeStartedAt) / 1000) % 12;
-    const progress = Math.max(0, Math.min(1, (phase - 0.35) / 5));
-    const gust = Math.sin(Math.PI * progress) ** 2;
-    const hair = gust * (Math.sin(phase * 1.65) * 42 + Math.sin(phase * 2.8) * 8);
-    const leaves = gust * (Math.sin(phase * 1.65 - 0.35) * 65 + Math.sin(phase * 3.1) * 9);
+    const phase = (now - breezeStartedAt) / 1000;
+    const hair = Math.sin(phase * 1.65) * 42 + Math.sin(phase * 2.8) * 8;
+    const leaves = Math.sin(phase * 1.65) * 65 + Math.sin(phase * 3.1) * 9;
     setBreeze(hair, leaves);
   }
+  // Eyelids close quickly, hold briefly, then reopen more softly (230 ms).
+  if (blinkStartedAt === null && now >= nextBlinkAt) blinkStartedAt = now;
+  if (blinkStartedAt !== null) {
+    const elapsed = now - blinkStartedAt;
+    if (elapsed >= 230) {
+      setBlink(0);
+      blinkStartedAt = null;
+      nextBlinkAt = now + 4500 + Math.random() * 5000;
+    } else {
+      const closure = elapsed < 75 ? elapsed / 75 : elapsed < 110 ? 1 : 1 - (elapsed - 110) / 120;
+      setBlink(closure * closure * (3 - 2 * closure));
+    }
+  }
   breezeFrame = requestAnimationFrame(animateBreeze);
+}
+
+function setBlink(closure) {
+  const value = closure.toFixed(3);
+  if (value === previousBlink) return;
+  previousBlink = value;
+  blinkOverlay.setAttribute('opacity', closure > 0 ? '1' : '0');
+  const openness = Math.max(0.001, 1 - closure).toFixed(3);
+  leftEye.setAttribute('transform', `translate(0 352) scale(1 ${openness}) translate(0 -352)`);
+  rightEye.setAttribute('transform', `translate(0 378) scale(1 ${openness}) translate(0 -378)`);
+  leftEye.setAttribute('opacity', closure > 0.94 ? '0' : '1');
+  rightEye.setAttribute('opacity', closure > 0.94 ? '0' : '1');
+  closedEyelashes.setAttribute('opacity', String(Math.max(0, (closure - 0.7) / 0.3)));
+  illustration.dataset.blinkState = closure > 0 ? 'blinking' : 'open';
 }
 
 function updateMotion() {
   cancelAnimationFrame(breezeFrame);
   const paused = motionPaused || document.hidden || !heroVisible;
   setBreeze(0, 0);
+  setBlink(0);
+  blinkStartedAt = null;
   illustration.dataset.breezeState = paused ? 'paused' : 'playing';
   if (!paused) {
     breezeStartedAt = performance.now();
+    nextBlinkAt = breezeStartedAt + 3500 + Math.random() * 2500;
     lastBreezeFrame = 0;
     breezeFrame = requestAnimationFrame(animateBreeze);
   }
-  motionToggle.textContent = motionPaused ? 'Enable breeze' : 'Pause breeze';
+  motionToggle.textContent = motionPaused ? 'Enable motion' : 'Pause motion';
   motionToggle.setAttribute('aria-pressed', String(!motionPaused));
   motionToggle.hidden = false;
 }

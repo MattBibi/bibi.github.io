@@ -17,7 +17,7 @@
   <link rel="preload" href="assets/bibi-hero.png" as="image" fetchpriority="high">
   <link rel="stylesheet" href="styles.css?v=20261106-breeze2">
   <link rel="stylesheet" href="polish.css?v=20261106-polish6">
-  <script src="app.js?v=20261106-polish6" defer></script>
+  <script src="app.js?v=20261106-motion7" defer></script>
   <script src="contributions.js?v=20261106-polish6" defer></script>
   <script type="application/ld+json">{"@context":"https://schema.org","@type":"Person","name":"Bibiana Souza","alternateName":"Bibi Souza","url":"https://bibi.community/","jobTitle":"Software Engineer and Developer Community Builder","sameAs":["https://github.com/bibschan","https://linkedin.com/in/bibschan","https://dev.to/bibschan"],"knowsLanguage":["English","Portuguese","Spanish"]}</script>
 </head>
@@ -56,6 +56,11 @@
             <title id="bibi-art-title">Cartoon Bibi smiling at her laptop, with a leafy plant beside her.</title>
             <defs>
               <filter id="contact-shadow" x="-20%" y="-100%" width="140%" height="300%"><feGaussianBlur stdDeviation="8"/></filter>
+              <linearGradient id="eyelid-skin" x1="0" y1="0" x2="0" y2="1"><stop stop-color="#fca061"/><stop offset="1" stop-color="#fda064"/></linearGradient>
+              <path id="left-eye-shape" d="M553 306Q566 314 578 313Q571 307 568 294Q579 303 590 301C616 295 645 311 655 336Q661 351 658 367Q620 358 578 349L580 344Q559 335 553 306Z"/>
+              <path id="right-eye-shape" d="M706 383C707 358 723 338 745 337Q764 334 778 346L781 350Q784 368 771 385L765 389Q735 386 706 383Z"/>
+              <clipPath id="left-eye-clip"><use href="#left-eye-shape"/></clipPath>
+              <clipPath id="right-eye-clip"><use href="#right-eye-shape"/></clipPath>
               <path id="front-hair-shape" d="M509 646C541 660 565 704 573 758C583 808 554 848 554 891C560 943 580 984 634 1028C590 1030 547 1009 516 977C490 945 477 905 483 867L494 798C502 748 496 703 484 680Z"/>
               <path id="right-hair-shape" d="M842 548C864 568 908 577 951 596C1008 622 1041 666 1049 727L1042 787L1001 788C1010 733 983 689 946 662C916 643 881 629 859 602Z"/>
               <path id="top-leaf-shape" d="M344 957C312 949 277 941 242 914C220 895 198 882 195 866C211 837 242 825 270 830C312 833 350 854 360 885C370 915 361 941 344 957Z"/>
@@ -79,6 +84,12 @@
             </defs>
             <g fill="#100a10" opacity=".42" filter="url(#contact-shadow)" aria-hidden="true"><ellipse cx="286" cy="1157" rx="125" ry="12"/><ellipse cx="823" cy="1149" rx="330" ry="13"/></g>
             <image href="assets/bibi-hero.png" width="1254" height="1254" mask="url(#fixed-illustration)"/>
+            <g id="blink-overlay" opacity="0" aria-hidden="true">
+              <g fill="url(#eyelid-skin)" stroke="url(#eyelid-skin)" stroke-width="5" stroke-linejoin="round"><use href="#left-eye-shape"/><use href="#right-eye-shape"/></g>
+              <g id="left-eye-motion"><image href="assets/bibi-hero.png" width="1254" height="1254" clip-path="url(#left-eye-clip)"/></g>
+              <g id="right-eye-motion"><image href="assets/bibi-hero.png" width="1254" height="1254" clip-path="url(#right-eye-clip)"/></g>
+              <g id="closed-eyelashes" opacity="0" fill="none" stroke="#24100d" stroke-width="4" stroke-linecap="round"><path d="M560 333Q597 365 655 355M572 343L566 342M709 378Q746 392 780 359M776 366L783 363"/></g>
+            </g>
             <path fill="#2c212c" d="M505 675C554 738 539 833 539 894C543 945 567 989 608 1015L560 1002C496 955 483 890 494 817L493 707Z"/>
             <g id="front-hair-motion"><image href="assets/bibi-hero.png" width="1254" height="1254" clip-path="url(#front-hair-clip)"/></g>
             <g id="right-hair-motion"><image href="assets/bibi-hero.png" width="1254" height="1254" clip-path="url(#right-hair-clip)"/></g>
@@ -107,7 +118,7 @@
       <section class="community-strip" id="community" aria-label="Speaking and community"><svg class="icon mic-icon"><use href="#mic"/></svg><h2>On stage. On air.<br class="small-break"> In the community.</h2><p><a href="https://www.mattandbibi.com/" target="_blank" rel="noopener noreferrer">Vamos Tech Talks <span aria-hidden="true">↗</span></a><span class="dot">·</span><button type="button" data-dialog="teach">Workshops</button><span class="dot">·</span><button type="button" data-dialog="connect">Meetups</button></p></section>
       <section class="contact-section" aria-label="Get in touch"><div><p class="eyebrow">Let’s build something that brings people together.</p><p class="contact-heading">Good things start with a conversation.</p></div><a class="button primary" href="https://linkedin.com/in/bibschan" target="_blank" rel="noopener noreferrer">Say hello <span aria-hidden="true">↗</span></a></section>
     </main>
-    <footer><span class="location"><svg class="icon"><use href="#pin"/></svg>Vancouver, BC</span><button id="motion-toggle" class="motion-toggle" type="button" aria-pressed="false" hidden>Pause breeze</button><div class="footer-links"><a href="https://dev.to/bibschan" target="_blank" rel="noopener noreferrer">Writing ↗</a><a href="https://linkedin.com/in/bibschan" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#linkedin"/></svg>LinkedIn <span aria-hidden="true">↗</span></a></div></footer>
+    <footer><span class="location"><svg class="icon"><use href="#pin"/></svg>Vancouver, BC</span><button id="motion-toggle" class="motion-toggle" type="button" aria-pressed="false" hidden>Pause motion</button><div class="footer-links"><a href="https://dev.to/bibschan" target="_blank" rel="noopener noreferrer">Writing ↗</a><a href="https://linkedin.com/in/bibschan" target="_blank" rel="noopener noreferrer"><svg class="icon"><use href="#linkedin"/></svg>LinkedIn <span aria-hidden="true">↗</span></a></div></footer>
   </div>
   <dialog id="detail-dialog" aria-labelledby="dialog-title"><div class="dialog-toolbar"><span class="dialog-kicker">Bibi Souza / Portfolio</span><button class="dialog-close" aria-label="Close details" type="button"><svg class="icon"><use href="#close"/></svg></button></div><div class="dialog-scroll"><div id="dialog-content"></div></div></dialog>
   <div id="contribution-tooltip" class="contribution-tooltip" role="tooltip" hidden><strong></strong><span></span></div>

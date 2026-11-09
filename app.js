@@ -3,8 +3,8 @@
 const cases = {
   build: {
     label: 'Build / Developer tooling', title: 'Community signal hub',
-    body: `<p>At Interledger Foundation, I built a custom TypeScript community signal hub and contribution leaderboard to make developer participation visible to the team.</p><p>Working with GitHub and Slack activity helps connect community conversations to the people building the product.</p><h3>From signals to useful feedback</h3><ul><li>Track developer engagement and repository activity to understand the impact of community programs.</li><li>Turn recurring questions into documentation improvements, program changes, and product feedback.</li><li>Share community insights in company-wide meetings to inform product and campaign direction.</li></ul>`,
-    links: [['Explore my GitHub', 'https://github.com/bibschan'], ['Read my writing', 'https://dev.to/bibschan']]
+    body: `<p>At Interledger Foundation, I built a custom TypeScript community signal hub and contribution leaderboard to make developer participation visible to the team.</p><p>Working with GitHub and Slack activity helps connect community conversations to the people building the product.</p><h3>From signals to useful feedback</h3><ul><li>Track developer engagement and repository activity to understand the impact of community programs.</li><li>Turn recurring questions into documentation improvements, program changes, and product feedback.</li><li>Share community insights in company-wide meetings to inform product and campaign direction.</li></ul><h3>Open source: community signals into Asana</h3><p>I created <a href="https://github.com/MattBibi/community-signals-asana" target="_blank" rel="noopener noreferrer">community-signals-asana</a> to measure and automate community signals with Asana. A Claude agent triages new GitHub issues and Slack questions into prioritized Asana tasks. When a task is completed, the app replies on the original issue or thread, closing the loop with the community. Each week, Claude reads the project through Asana’s MCP server and drafts a community update.</p><p class="mono case-tags">TypeScript · Claude · Asana API + MCP · GitHub · Slack · Webhooks</p>`,
+    links: [['View community-signals-asana', 'https://github.com/MattBibi/community-signals-asana'], ['Read how I built it', 'https://dev.to/bibschan/turning-community-signals-into-asana-tasks-4gok'], ['Explore my GitHub', 'https://github.com/bibschan']]
   },
   teach: {
     label: 'Teach / Developer education', title: 'Learn by building.',
@@ -229,3 +229,48 @@ if ('IntersectionObserver' in window) {
   }).observe(illustration);
 }
 updateMotion();
+
+// Speaking gallery lightbox.
+(() => {
+  const links = [...document.querySelectorAll('.speaking-photo')];
+  const box = document.getElementById('photo-lightbox');
+  if (!links.length || !box || typeof box.showModal !== 'function') return;
+  const img = box.querySelector('img');
+  const caption = box.querySelector('.lightbox-caption');
+  const count = box.querySelector('.lightbox-count');
+  let current = 0;
+  let opener = null;
+  const show = index => {
+    current = (index + links.length) % links.length;
+    const link = links[current];
+    img.src = link.getAttribute('href');
+    img.alt = link.querySelector('img').alt;
+    caption.textContent = link.dataset.caption;
+    count.textContent = `${current + 1} / ${links.length}`;
+    [-1, 1].forEach(step => { new Image().src = links[(current + step + links.length) % links.length].getAttribute('href'); });
+  };
+  links.forEach((link, index) => link.addEventListener('click', event => {
+    if (event.metaKey || event.ctrlKey || event.shiftKey) return;
+    event.preventDefault();
+    opener = link;
+    show(index);
+    box.showModal();
+  }));
+  box.querySelector('.lightbox-prev').addEventListener('click', () => show(current - 1));
+  box.querySelector('.lightbox-next').addEventListener('click', () => show(current + 1));
+  box.querySelector('.lightbox-close').addEventListener('click', () => box.close());
+  box.addEventListener('click', event => { if (event.target === box) box.close(); });
+  box.addEventListener('keydown', event => {
+    if (event.key === 'ArrowLeft') { event.preventDefault(); show(current - 1); }
+    if (event.key === 'ArrowRight') { event.preventDefault(); show(current + 1); }
+  });
+  let touchX = null;
+  box.addEventListener('touchstart', event => { touchX = event.touches[0].clientX; }, { passive: true });
+  box.addEventListener('touchend', event => {
+    if (touchX === null) return;
+    const dx = event.changedTouches[0].clientX - touchX;
+    if (Math.abs(dx) > 45) show(current + (dx < 0 ? 1 : -1));
+    touchX = null;
+  });
+  box.addEventListener('close', () => { img.removeAttribute('src'); opener?.focus({ preventScroll: true }); });
+})();
